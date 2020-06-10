@@ -68,7 +68,7 @@ $(document).ready(function(){
             venditePerVenditore[nomeVenditore] = element.toString().slice(0,5);
         }     
 
-        var nomi = Object.keys(venditePerVenditore);
+        var nomi = Object.keys(venditePerVenditore); 
         var vendite = Object.values(venditePerVenditore);
         generaPie(nomi,vendite);
     }
