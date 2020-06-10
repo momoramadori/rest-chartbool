@@ -1,0 +1,31 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: white;
+}
+
+.boxes {
+    padding: 50px;
+    height: 50vh;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.description, .graph {
+    width: 50%;
+    height: 100%;
+    display: flex;
+}
+
+p {
+    margin: auto;
+    font-size: 50px;
+    text-transform: uppercase;
+}
+
+canvas {
+    margin: auto;
+}
