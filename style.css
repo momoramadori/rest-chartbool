@@ -6,7 +6,7 @@
 }
 
 .boxes {
-    padding: 50px;
+    padding: 10px 50px;
     height: 50vh;
     background-color: black;
     display: flex;
