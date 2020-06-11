@@ -89,12 +89,12 @@ $(document).ready(function(){
                         'rgba(75, 192, 192, 1)',
                         'rgba(153, 102, 255, 1)',
                         'rgba(255, 159, 64, 1)',
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
+                        'rgba(255, 99, 180, 1)',
+                        'rgba(20, 162, 235, 1)',
+                        'rgba(255, 100, 86, 1)',
+                        'rgba(0, 192, 192, 1)',
+                        'rgba(153, 0, 255, 1)',
+                        'rgba(255, 159, 0, 1)'
                     ],
                     borderWidth: 1,
                     lineTension: 0
@@ -121,7 +121,7 @@ $(document).ready(function(){
 
     function generaPie(nomi,vendite) {
         var ctx = $('#myChart_pie')[0].getContext('2d');
-        var myChart = new Chart(ctx, {
+        var myChart = new Chart( ctx, {
             type: 'pie',
             data: {
                 labels: nomi,
@@ -132,30 +132,13 @@ $(document).ready(function(){
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
                         'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-
+                        'rgba(75, 192, 192, 0.2)'
                     ],
                     borderColor: [
                         'rgba(255, 99, 132, 1)',
                         'rgba(54, 162, 235, 1)',
                         'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)',
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
+                        'rgba(75, 192, 192, 1)'
                     ],
                     borderWidth: 1
                 }]
