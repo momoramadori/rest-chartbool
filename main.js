@@ -1,18 +1,22 @@
 $(document).ready(function(){
     //chiamata ajax per recuperare i dati da aggregare
-    $.ajax({
-        'url':"http://157.230.17.132:4021/sales",
-        'method':'GET',
-        'success': function(data) {
+    ajaxCallGeneral();
 
-            ottieniVenditeMese(data);
-            ottieniVenditeVenditore(data)
-        },
-        'error': function() {
-            console.log('errore');    
-        }
-    })
-
+    function ajaxCallGeneral() {
+        $.ajax({
+            'url':"http://157.230.17.132:4021/sales",
+            'method':'GET',
+            'success': function(data) {
+    
+                ottieniVenditeMese(data);
+                ottieniVenditeVenditore(data);
+                
+            },
+            'error': function() {
+                console.log('errore');    
+            }
+        })
+    }
 
     function ottieniVenditeMese(data) {
         var venditePerMese = {
@@ -43,6 +47,8 @@ $(document).ready(function(){
         var vendite = Object.values(venditePerMese);
         //genero il grafico line
         generaLine(mesi,vendite); 
+        //genero le option della select per i mesi
+        generaSelectDate(mesi);
     }
 
     function ottieniVenditeVenditore(data) {
@@ -60,6 +66,7 @@ $(document).ready(function(){
             totaleVendite += singolaVendita;
         }
 
+        //rendo il numero espresso in percentuale
         for (const nomeVenditore in venditePerVenditore) {
             var element = venditePerVenditore[nomeVenditore]
             element = ((venditePerVenditore[nomeVenditore] / totaleVendite)) * 100;
@@ -68,14 +75,17 @@ $(document).ready(function(){
 
         var nomi = Object.keys(venditePerVenditore); 
         var vendite = Object.values(venditePerVenditore);
+
         //genero il grafico pie
         generaPie(nomi,vendite);
+        //genero le option della select
+        generaSelectNomi(nomi);        
     }
 
     //con chart.js
     function generaLine(mesi,vendite) {
         var ctx = $('#myChart_bar')[0].getContext('2d');
-        var myChart = new Chart(ctx, {
+        var myChartLine = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: mesi,
@@ -108,10 +118,16 @@ $(document).ready(function(){
         })
     }
 
+    function generaSelectDate (mesi) {
+        for (let index = 0; index < mesi.length; index++) {
+            $('#date').append('<option value="'+ mesi[index] + '">'+ mesi[index] +'</option>');
+        }
+    }
+
     //con chart.js
     function generaPie(nomi,vendite) {
         var ctx = $('#myChart_pie')[0].getContext('2d');
-        var myChart = new Chart( ctx, {
+        var myChartPie = new Chart( ctx, {
             type: 'pie',
             data: {
                 labels: nomi,
@@ -144,4 +160,39 @@ $(document).ready(function(){
             }
         })
     }
+
+    function generaSelectNomi (nomi) {
+        for (let index = 0; index < nomi.length; index++) {
+            $('#salesman').append('<option value="'+ nomi[index] + '">'+ nomi[index] +'</option>');
+        }
+    }
+
+
+    $('button').on('click', function(){
+        var somma = $('input').val();
+        var venditore = $('#salesman').val();
+        var meseLettere = $('#date').val();
+        var onlyMonth = moment().month(meseLettere).format("MM");
+        var date = "01/"+ onlyMonth +"/2017";
+
+        $.ajax({
+            'url':"http://157.230.17.132:4021/sales",
+            'method':'POST',
+            'data': {
+                "amount": parseInt(somma),
+                "salesman": venditore,
+                "date": date
+            },
+            'success': function(data) {
+                ajaxCallGeneral();
+            },
+            'error': function() {
+                console.log('errore');    
+            }
+        })  
+    })
 })
+
+
+
+

@@ -2,13 +2,29 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    color: white;
 }
+
+body {
+    background-color: black;
+}
+
+header {
+    height: 100px;
+    background: rgb(0,0,0);
+    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(47,45,45,1) 50%, rgba(113,113,113,1) 100%);
+    display: flex;
+}
+
+header div {
+    margin: auto;
+    color: black;
+}
+
 
 .boxes {
     padding: 10px 50px;
-    height: 50vh;
-    background-color: black;
+    height: 500px;
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
