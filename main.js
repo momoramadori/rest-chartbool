@@ -44,7 +44,7 @@ $(document).ready(function(){
         }
         var mesi = Object.keys(venditePerMese);
         var vendite = Object.values(venditePerMese);
-        generaBar(mesi,vendite); 
+        generaLine(mesi,vendite); 
     }
 
     function ottieniVenditeVenditore(data) {
@@ -73,10 +73,10 @@ $(document).ready(function(){
         generaPie(nomi,vendite);
     }
 
-    function generaBar(mesi,vendite) {
+    function generaLine(mesi,vendite) {
         var ctx = $('#myChart_bar')[0].getContext('2d');
         var myChart = new Chart(ctx, {
-            type: 'bar',
+            type: 'line',
             data: {
                 labels: mesi,
                 datasets: [{
