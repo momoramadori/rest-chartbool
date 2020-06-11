@@ -1,8 +1,5 @@
-//test moment.js
-// var test = moment("12/05/2018", "DD/MM/YYYY");
-// var mese = test.format("MM");
-
 $(document).ready(function(){
+    //chiamata ajax per recuperare i dati da aggregare
     $.ajax({
         'url':"http://157.230.17.132:4021/sales",
         'method':'GET',
@@ -44,6 +41,7 @@ $(document).ready(function(){
         }
         var mesi = Object.keys(venditePerMese);
         var vendite = Object.values(venditePerMese);
+        //genero il grafico line
         generaLine(mesi,vendite); 
     }
 
@@ -70,9 +68,11 @@ $(document).ready(function(){
 
         var nomi = Object.keys(venditePerVenditore); 
         var vendite = Object.values(venditePerVenditore);
+        //genero il grafico pie
         generaPie(nomi,vendite);
     }
 
+    //con chart.js
     function generaLine(mesi,vendite) {
         var ctx = $('#myChart_bar')[0].getContext('2d');
         var myChart = new Chart(ctx, {
@@ -119,6 +119,7 @@ $(document).ready(function(){
         })
     }
 
+    //con chart.js
     function generaPie(nomi,vendite) {
         var ctx = $('#myChart_pie')[0].getContext('2d');
         var myChart = new Chart( ctx, {
