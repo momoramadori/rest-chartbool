@@ -48,8 +48,10 @@ $(document).ready(function(){
         var vendite = Object.values(venditePerMese);
         //genero il grafico line
         generaLine(mesi,vendite); 
-        //genero le option della select per i mesi
-        generaSelectDate(mesi);
+        //genero le option della select per i mesi se non sono già state generate
+        if($('#date').val() == null) {
+            generaSelectDate(mesi);
+        }
     }
 
     function ottieniVenditeVenditore(data) {
@@ -57,7 +59,7 @@ $(document).ready(function(){
         var totaleVendite = 0;
         for (let index = 0; index < data.length; index++) {
             var singoloEvento = data[index];
-            var singolaVendita = singoloEvento.amount;
+            var singolaVendita = parseInt(singoloEvento.amount);
             var nomeVenditore = data[index].salesman;
             if (!venditePerVenditore.hasOwnProperty(nomeVenditore)) {
                 venditePerVenditore[nomeVenditore] = singolaVendita
@@ -79,8 +81,10 @@ $(document).ready(function(){
 
         //genero il grafico pie
         generaPie(nomi,vendite);
-        //genero le option della select
-        generaSelectNomi(nomi);        
+        //genero le option della select dei venditori se non sono già state generate
+        if($('#salesman').val() == null) {
+            generaSelectNomi(nomi);  
+        }      
     }
 
     function ottieniVenditeTrimestre (data) {
