@@ -10,6 +10,7 @@ $(document).ready(function(){
     
                 ottieniVenditeMese(data);
                 ottieniVenditeVenditore(data);
+                ottieniVenditeTrimestre(data);
                 
             },
             'error': function() {
@@ -80,6 +81,16 @@ $(document).ready(function(){
         generaPie(nomi,vendite);
         //genero le option della select
         generaSelectNomi(nomi);        
+    }
+
+    function ottieniVenditeTrimestre (data) {
+        var venditePerTrimestre = {}
+        for (let index = 0; index < data.length; index++) {
+            var singolaVendita = data[index].amount;
+            var formatoData = moment(data[index].date, "DD/MM/YYYY");
+            var meseVendita = formatoData.format("MMMM");
+            
+        }
     }
 
     //con chart.js
@@ -169,7 +180,7 @@ $(document).ready(function(){
 
 
     $('button').on('click', function(){
-        var somma = $('input').val();
+        var valoreVendita = parseInt($('input').val());
         var venditore = $('#salesman').val();
         var meseLettere = $('#date').val();
         var onlyMonth = moment().month(meseLettere).format("MM");
@@ -179,7 +190,7 @@ $(document).ready(function(){
             'url':"http://157.230.17.132:4021/sales",
             'method':'POST',
             'data': {
-                "amount": parseInt(somma),
+                "amount": valoreVendita,
                 "salesman": venditore,
                 "date": date
             },
