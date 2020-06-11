@@ -7,9 +7,7 @@ $(document).ready(function(){
             'url':"http://157.230.17.132:4021/sales",
             'method':'GET',
             'success': function(data) {
-                console.log(data);
-                
-    
+
                 ottieniVenditeMese(data);
                 ottieniVenditeVenditore(data);
                 ottieniVenditeTrimestre(data);
@@ -48,6 +46,7 @@ $(document).ready(function(){
         }
         var mesi = Object.keys(venditePerMese);
         var vendite = Object.values(venditePerMese);
+        
         //genero il grafico line
         generaLine(mesi,vendite); 
         //genero le option della select per i mesi se non sono già state generate
