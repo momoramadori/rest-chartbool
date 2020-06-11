@@ -22,24 +22,20 @@ header div {
 
 
 .boxes {
+    float: left;
     padding: 10px 50px;
-    height: 500px;
+    width: 100%;
+    height: calc(100vh - 100px);
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.description, .graph {
+.graph {
+    display: flex;
     width: 50%;
     height: 100%;
-    display: flex;
-}
-
-p {
-    margin: auto;
-    font-size: 50px;
-    text-transform: uppercase;
 }
 
 canvas {

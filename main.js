@@ -7,6 +7,8 @@ $(document).ready(function(){
             'url':"http://157.230.17.132:4021/sales",
             'method':'GET',
             'success': function(data) {
+                console.log(data);
+                
     
                 ottieniVenditeMese(data);
                 ottieniVenditeVenditore(data);
@@ -88,18 +90,33 @@ $(document).ready(function(){
     }
 
     function ottieniVenditeTrimestre (data) {
-        var venditePerTrimestre = {}
+        var venditePerTrimestre = {
+            Q1 : 0,
+            Q2 : 0,
+            Q3 : 0,
+            Q4 : 0
+        };
         for (let index = 0; index < data.length; index++) {
-            var singolaVendita = data[index].amount;
             var formatoData = moment(data[index].date, "DD/MM/YYYY");
             var meseVendita = formatoData.format("MMMM");
-            
+            if (meseVendita == "January" || meseVendita == "February" || meseVendita == "March" ) {
+                venditePerTrimestre.Q1++;
+            } else if (meseVendita == "April" || meseVendita == "May" || meseVendita == "June" ) {
+                venditePerTrimestre.Q2++;
+            } else if (meseVendita == "July" || meseVendita == "August" || meseVendita == "September" ) {
+                venditePerTrimestre.Q3++;
+            } else  {
+                venditePerTrimestre.Q4++;
+            }
         }
+        var trimestri = Object.keys(venditePerTrimestre);
+        var numeroVendite = Object.values(venditePerTrimestre);
+        generaBar(trimestri,numeroVendite)
     }
 
     //con chart.js
     function generaLine(mesi,vendite) {
-        var ctx = $('#myChart_bar')[0].getContext('2d');
+        var ctx = $('#myChart_line')[0].getContext('2d');
         var myChartLine = new Chart(ctx, {
             type: 'line',
             data: {
@@ -182,7 +199,40 @@ $(document).ready(function(){
         }
     }
 
+    function generaBar(trimestri,vendite) {
+        var ctx = $('#myChart_bar')[0].getContext('2d');
+        var myChartBar = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: trimestri,
+                datasets: [{
+                    label: 'Quarter\'s Total Sales',
+                    data: vendite,
+                    borderColor: 'rgb(30,144,255)',
+                    backgroundColor:'rgb(30,144,255)',
+                    borderWidth: 2,
+                }],
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Amount of sales for Quarter'
+                },
+                legend: {
+                    display: false,
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        })
+    }
 
+//al click apporto le modifiche ai grafici
     $('button').on('click', function(){
         var valoreVendita = parseInt($('input').val());
         var venditore = $('#salesman').val();
