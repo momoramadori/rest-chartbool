@@ -37,7 +37,7 @@ $(document).ready(function(){
 
         for (let index = 0; index < data.length; index++) {
             var singoloEvento = data[index];
-            var singolaVendita = singoloEvento.amount;
+            var singolaVendita = parseInt(singoloEvento.amount);
             var formatoData = moment(data[index].date, "DD/MM/YYYY");
             var meseVendita = formatoData.format("MMMM");
             if (venditePerMese.hasOwnProperty(meseVendita)) {
