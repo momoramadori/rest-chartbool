@@ -63,7 +63,7 @@ $(document).ready(function(){
         for (const nomeVenditore in venditePerVenditore) {
             var element = venditePerVenditore[nomeVenditore]
             element = ((venditePerVenditore[nomeVenditore] / totaleVendite)) * 100;
-            venditePerVenditore[nomeVenditore] = element.toString().slice(0,5);
+            venditePerVenditore[nomeVenditore] = element.toFixed(2);
         }     
 
         var nomi = Object.keys(venditePerVenditore); 
@@ -82,21 +82,10 @@ $(document).ready(function(){
                 datasets: [{
                     label: 'Total Sales',
                     data: vendite,
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)',
-                        'rgba(255, 99, 180, 1)',
-                        'rgba(20, 162, 235, 1)',
-                        'rgba(255, 100, 86, 1)',
-                        'rgba(0, 192, 192, 1)',
-                        'rgba(153, 0, 255, 1)',
-                        'rgba(255, 159, 0, 1)'
-                    ],
-                    borderWidth: 1,
+                    borderColor: 'rgb(30,144,255)',
+                    pointBorderColor:'red',
+                    pointBackgroundColor: 'red',
+                    borderWidth: 2,
                     lineTension: 0
                 }],
             },
