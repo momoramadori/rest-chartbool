@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    
     //chiamata ajax per recuperare i dati da aggregare
     const url = "http://157.230.17.132:4021/sales";
     ajaxCallGeneral();
