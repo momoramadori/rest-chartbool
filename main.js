@@ -7,7 +7,7 @@ $(document).ready(function(){
             'url':"http://157.230.17.132:4021/sales",
             'method':'GET',
             'success': function(data) {
-
+                
                 ottieniVenditeMese(data);
                 ottieniVenditeVenditore(data);
                 ottieniVenditeTrimestre(data);
@@ -46,11 +46,10 @@ $(document).ready(function(){
         }
         var mesi = Object.keys(venditePerMese);
         var vendite = Object.values(venditePerMese);
-        
         //genero il grafico line
         generaLine(mesi,vendite); 
         //genero le option della select per i mesi se non sono già state generate
-        if($('#date').val() == null) {
+        if($('#date option').length == 1) {
             generaSelectDate(mesi);
         }
     }
@@ -83,7 +82,7 @@ $(document).ready(function(){
         //genero il grafico pie
         generaPie(nomi,vendite);
         //genero le option della select dei venditori se non sono già state generate
-        if($('#salesman').val() == null) {
+        if($('#salesman option').length == 1) {
             generaSelectNomi(nomi);  
         }      
     }
@@ -115,6 +114,8 @@ $(document).ready(function(){
 
     //con chart.js
     function generaLine(mesi,vendite) {
+        $('.line-wrapper').empty();
+        $('.line-wrapper').append('<canvas id="myChart_line"></canvas>');
         var ctx = $('#myChart_line')[0].getContext('2d');
         var myChartLine = new Chart(ctx, {
             type: 'line',
@@ -131,6 +132,15 @@ $(document).ready(function(){
                 }],
             },
             options: {
+                tooltips: {
+                enabled: true,
+                mode: 'single',
+                callbacks: {
+                    label: function(tooltipItems, data) { 
+                        return tooltipItems.yLabel + ' €';
+                    }
+                }
+            },
                 title: {
                     display: true,
                     text: 'Monthly amount of sales'
@@ -157,6 +167,9 @@ $(document).ready(function(){
 
     //con chart.js
     function generaPie(nomi,vendite) {
+
+        $('.pie-wrapper').empty();
+        $('.pie-wrapper').append('<canvas id="myChart_pie"></canvas>');
         var ctx = $('#myChart_pie')[0].getContext('2d');
         var myChartPie = new Chart( ctx, {
             type: 'pie',
@@ -181,6 +194,15 @@ $(document).ready(function(){
                 }]
             },
             options: {
+                tooltips: {
+                    callbacks: {
+                        label: function( tootltipItem, data){
+                            var nomeVenditore = data.labels[tootltipItem.index];
+                            var percentualeVendite = data.datasets[tootltipItem.datasetIndex].data[tootltipItem.index];
+                            return nomeVenditore + ': ' + percentualeVendite + '%';
+                        }
+                    },
+                },
                 title: {
                     display: true,
                     text: 'Salesman\'s Sales'
@@ -199,6 +221,8 @@ $(document).ready(function(){
     }
 
     function generaBar(trimestri,vendite) {
+        $('.bar-wrapper').empty();
+        $('.bar-wrapper').append('<canvas id="myChart_bar"></canvas>');
         var ctx = $('#myChart_bar')[0].getContext('2d');
         var myChartBar = new Chart(ctx, {
             type: 'bar',
@@ -233,27 +257,29 @@ $(document).ready(function(){
 
 //al click apporto le modifiche ai grafici
     $('button').on('click', function(){
-        var valoreVendita = parseInt($('input').val());
-        var venditore = $('#salesman').val();
-        var meseLettere = $('#date').val();
-        var onlyMonth = moment().month(meseLettere).format("MM");
-        var date = "01/"+ onlyMonth +"/2017";
+        if ($('#salesman').val() != 'none' && $('#date').val() != 'none' ) {
+            var valoreVendita = parseInt($('input').val());
+            var venditore = $('#salesman').val();
+            var meseLettere = $('#date').val();
+            var onlyMonth = moment().month(meseLettere).format("MM");
+            var date = "01/"+ onlyMonth +"/2017";
 
-        $.ajax({
-            'url':"http://157.230.17.132:4021/sales",
-            'method':'POST',
-            'data': {
-                "amount": valoreVendita,
-                "salesman": venditore,
-                "date": date
-            },
-            'success': function(data) {
-                ajaxCallGeneral();
-            },
-            'error': function() {
-                console.log('errore');    
-            }
-        })  
+            $.ajax({
+                'url':"http://157.230.17.132:4021/sales",
+                'method':'POST',
+                'data': {
+                    "amount": valoreVendita,
+                    "salesman": venditore,
+                    "date": date
+                },
+                'success': function(data) {
+                    ajaxCallGeneral();
+                },
+                'error': function() {
+                    console.log('errore');    
+                }
+            })  
+        }
     })
 })
 
