@@ -1,10 +1,11 @@
 $(document).ready(function(){
     //chiamata ajax per recuperare i dati da aggregare
+    const url = "http://157.230.17.132:4021/sales";
     ajaxCallGeneral();
 
     function ajaxCallGeneral() {
         $.ajax({
-            'url':"http://157.230.17.132:4021/sales",
+            'url': url,
             'method':'GET',
             'success': function(data) {
                 
@@ -264,8 +265,11 @@ $(document).ready(function(){
             var onlyMonth = moment().month(meseLettere).format("MM");
             var date = "01/"+ onlyMonth +"/2017";
             if (valoreVendita > 0) {
+                $('input').val('')
+                $('#salesman').val('none')
+                $('#date').val('none')
                 $.ajax({
-                    'url':"http://157.230.17.132:4021/sales",
+                    'url': url,
                     'method':'POST',
                     'data': {
                         "amount": valoreVendita,
