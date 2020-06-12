@@ -21,20 +21,12 @@ $(document).ready(function(){
     }
 
     function ottieniVenditeMese(data) {
-        var venditePerMese = {
-            'January': 0,
-            'February': 0,
-            'March': 0,
-            'April': 0,
-            'May': 0,
-            'June': 0,
-            'July': 0,
-            'August': 0,
-            'September': 0,
-            'October': 0,
-            'November': 0,
-            'December': 0
-        };
+        var venditePerMese = {};
+
+        for (let index = 1; index <= 12; index++) {
+            nomeMese = moment(index,'M').format('MMMM');
+            venditePerMese[nomeMese] = 0;
+        }
 
         for (let index = 0; index < data.length; index++) {
             var singoloEvento = data[index];
