@@ -37,7 +37,7 @@ $(document).ready(function(){
 
         for (let index = 0; index < data.length; index++) {
             var singoloEvento = data[index];
-            var singolaVendita = parseInt(singoloEvento.amount);
+            var singolaVendita = parseFloat(singoloEvento.amount);
             var formatoData = moment(data[index].date, "DD/MM/YYYY");
             var meseVendita = formatoData.format("MMMM");
             if (venditePerMese.hasOwnProperty(meseVendita)) {
@@ -59,7 +59,7 @@ $(document).ready(function(){
         var totaleVendite = 0;
         for (let index = 0; index < data.length; index++) {
             var singoloEvento = data[index];
-            var singolaVendita = parseInt(singoloEvento.amount);
+            var singolaVendita = parseFloat(singoloEvento.amount);
             var nomeVenditore = data[index].salesman;
             if (!venditePerVenditore.hasOwnProperty(nomeVenditore)) {
                 venditePerVenditore[nomeVenditore] = singolaVendita
@@ -257,28 +257,29 @@ $(document).ready(function(){
 
 //al click apporto le modifiche ai grafici
     $('button').on('click', function(){
-        if ($('#salesman').val() != 'none' && $('#date').val() != 'none' ) {
-            var valoreVendita = parseInt($('input').val());
+        if ($('#salesman').val() != 'none' && $('#date').val() != 'none') {
+            var valoreVendita = $('input').val();
             var venditore = $('#salesman').val();
             var meseLettere = $('#date').val();
             var onlyMonth = moment().month(meseLettere).format("MM");
             var date = "01/"+ onlyMonth +"/2017";
-
-            $.ajax({
-                'url':"http://157.230.17.132:4021/sales",
-                'method':'POST',
-                'data': {
-                    "amount": valoreVendita,
-                    "salesman": venditore,
-                    "date": date
-                },
-                'success': function(data) {
-                    ajaxCallGeneral();
-                },
-                'error': function() {
-                    console.log('errore');    
-                }
-            })  
+            if (valoreVendita > 0) {
+                $.ajax({
+                    'url':"http://157.230.17.132:4021/sales",
+                    'method':'POST',
+                    'data': {
+                        "amount": valoreVendita,
+                        "salesman": venditore,
+                        "date": date
+                    },
+                    'success': function(data) {
+                        ajaxCallGeneral();
+                    },
+                    'error': function() {
+                        console.log('errore');    
+                    }
+                })  
+            }
         }
     })
 })
