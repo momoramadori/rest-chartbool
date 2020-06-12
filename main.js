@@ -8,11 +8,9 @@ $(document).ready(function(){
             'url': url,
             'method':'GET',
             'success': function(data) {
-                
                 ottieniVenditeMese(data);
                 ottieniVenditeVenditore(data);
                 ottieniVenditeTrimestre(data);
-                
             },
             'error': function() {
                 console.log('errore');    
@@ -88,13 +86,14 @@ $(document).ready(function(){
             Q4 : 0
         };
         for (let index = 0; index < data.length; index++) {
-            var formatoData = moment(data[index].date, "DD/MM/YYYY");
-            var meseVendita = formatoData.format("MMMM");
-            if (meseVendita == "January" || meseVendita == "February" || meseVendita == "March" ) {
+
+            var meseVendita = moment(data[index].date, "DD/MM/YYYY").quarter();
+            
+            if (meseVendita == 1) {
                 venditePerTrimestre.Q1++;
-            } else if (meseVendita == "April" || meseVendita == "May" || meseVendita == "June" ) {
+            } else if ( meseVendita == 2) {
                 venditePerTrimestre.Q2++;
-            } else if (meseVendita == "July" || meseVendita == "August" || meseVendita == "September" ) {
+            } else if ( meseVendita == 3) {
                 venditePerTrimestre.Q3++;
             } else  {
                 venditePerTrimestre.Q4++;
@@ -153,8 +152,10 @@ $(document).ready(function(){
     }
 
     function generaSelectDate (mesi) {
+        var template = Handlebars.compile($('#date-wrapper').html());
         for (let index = 0; index < mesi.length; index++) {
-            $('#date').append('<option value="'+ mesi[index] + '">'+ mesi[index] +'</option>');
+            $('#date').append(template({'mese': mesi[index]}));
+            // $('#date').append('<option value="'+ mesi[index] + '">'+ mesi[index] +'</option>');
         }
     }
 
@@ -208,8 +209,10 @@ $(document).ready(function(){
     }
 
     function generaSelectNomi (nomi) {
+        var template = Handlebars.compile($('#salesman-wrapper').html());
         for (let index = 0; index < nomi.length; index++) {
-            $('#salesman').append('<option value="'+ nomi[index] + '">'+ nomi[index] +'</option>');
+            $('#salesman').append(template({'nome': nomi[index]}));
+            // $('#salesman').append('<option value="'+ nomi[index] + '">'+ nomi[index] +'</option>');
         }
     }
 
