@@ -1,1 +1,1 @@
-#34 : Chiamata API REST utilizzando chart.js
+#34 : Chiamate API REST utilizzando chart.js per la generazione di grafici da modificare interattivamente
